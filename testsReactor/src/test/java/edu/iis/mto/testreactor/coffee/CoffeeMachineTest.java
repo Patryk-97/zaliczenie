@@ -41,8 +41,6 @@ class CoffeeMachineTest {
 
     @Test
     public void ShouldCallGrinderAndMilkProviderandCoffeeMachine() {
-        CoffeeSize unrelevantCoffeeSize = CoffeeSize.SMALL;
-        CoffeType unrelevantCoffeeType = CoffeType.CAPUCCINO;
         CoffeOrder coffeeOrder = coffeeOrder(unrelevantCoffeeSize, unrelevantCoffeeType);
         Coffee coffee = coffeeMachine.make(coffeeOrder);
     }
