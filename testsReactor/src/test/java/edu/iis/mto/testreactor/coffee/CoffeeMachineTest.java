@@ -26,13 +26,13 @@ class CoffeeMachineTest {
 
     private CoffeeMachine coffeeMachine;
     private CoffeeSize unrelevantCoffeeSize = CoffeeSize.SMALL;
-    private CoffeType unrelevantCoffeeType = CoffeType.CAPUCCINO;
+    private CoffeeType unrelevantCoffeeType = CoffeeType.CAPUCCINO;
 
     @BeforeEach
     void setUp() {
         coffeeMachine = new CoffeeMachine(grinder, milkProvider, receipes);
         unrelevantCoffeeSize = CoffeeSize.SMALL;
-        unrelevantCoffeeType = CoffeType.CAPUCCINO;
+        unrelevantCoffeeType = CoffeeType.CAPUCCINO;
         Mockito.when(grinder.canGrindFor(unrelevantCoffeeSize))
                .thenReturn(true);
         Mockito.when(receipes.getReceipe(unrelevantCoffeeType))
@@ -41,12 +41,12 @@ class CoffeeMachineTest {
 
     @Test
     public void ShouldCallGrinderAndMilkProviderandCoffeeMachine() {
-        CoffeOrder coffeeOrder = coffeeOrder(unrelevantCoffeeSize, unrelevantCoffeeType);
+        CoffeeOrder coffeeOrder = coffeeOrder(unrelevantCoffeeSize, unrelevantCoffeeType);
         Coffee coffee = coffeeMachine.make(coffeeOrder);
     }
 
-    private CoffeOrder coffeeOrder(CoffeeSize unrelevantCoffeeSize, CoffeType unrelevantCoffeeType) {
-        return CoffeOrder.builder()
+    private CoffeeOrder coffeeOrder(CoffeeSize unrelevantCoffeeSize, CoffeeType unrelevantCoffeeType) {
+        return CoffeeOrder.builder()
                          .withSize(unrelevantCoffeeSize)
                          .withType(unrelevantCoffeeType)
                          .build();

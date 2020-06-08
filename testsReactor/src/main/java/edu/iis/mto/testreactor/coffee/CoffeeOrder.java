@@ -2,12 +2,12 @@ package edu.iis.mto.testreactor.coffee;
 
 import static java.util.Objects.requireNonNull;
 
-public class CoffeOrder {
+public class CoffeeOrder {
 
     private final CoffeeSize size;
-    private final CoffeType type;
+    private final CoffeeType type;
 
-    private CoffeOrder(Builder builder) {
+    private CoffeeOrder(Builder builder) {
         this.size = requireNonNull(builder.size, "size == null");
         this.type = requireNonNull(builder.type, "type == null");
     }
@@ -16,7 +16,7 @@ public class CoffeOrder {
         return size;
     }
 
-    public CoffeType getType() {
+    public CoffeeType getType() {
         return type;
     }
 
@@ -32,7 +32,7 @@ public class CoffeOrder {
     public static final class Builder {
 
         private CoffeeSize size;
-        private CoffeType type;
+        private CoffeeType type;
 
         private Builder() {}
 
@@ -41,13 +41,13 @@ public class CoffeOrder {
             return this;
         }
 
-        public Builder withType(CoffeType type) {
+        public Builder withType(CoffeeType type) {
             this.type = type;
             return this;
         }
 
-        public CoffeOrder build() {
-            return new CoffeOrder(this);
+        public CoffeeOrder build() {
+            return new CoffeeOrder(this);
         }
     }
 }

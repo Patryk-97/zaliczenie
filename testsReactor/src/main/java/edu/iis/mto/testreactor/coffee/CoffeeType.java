@@ -1,6 +1,6 @@
 package edu.iis.mto.testreactor.coffee;
 
-public enum CoffeType {
+public enum CoffeeType {
     ESPRESSO,
     CAPUCCINO,
     LATTE,

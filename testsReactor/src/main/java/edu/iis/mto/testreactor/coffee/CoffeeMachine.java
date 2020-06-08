@@ -18,7 +18,7 @@ public class CoffeeMachine {
         this.receipes = requireNonNull(receipes, "receipes == null");
     }
 
-    public Coffee make(CoffeOrder order) {
+    public Coffee make(CoffeeOrder order) {
         double coffeWeightGr = grindCoffee(order.getSize());
         Coffee coffee = create(order, coffeWeightGr);
         addMilk(order, coffee);
@@ -32,7 +32,7 @@ public class CoffeeMachine {
         return grinder.grind(coffeeSize);
     }
 
-    private Coffee create(CoffeOrder order, double coffeeWeightGr) {
+    private Coffee create(CoffeeOrder order, double coffeeWeightGr) {
         CoffeeReceipe receipe = getReceipe(order);
         Coffee coffee = new Coffee();
         coffee.setWaterAmount(getWaterAmount(order, receipe));
@@ -40,7 +40,7 @@ public class CoffeeMachine {
         return coffee;
     }
 
-    private void addMilk(CoffeOrder order, Coffee coffee) {
+    private void addMilk(CoffeeOrder order, Coffee coffee) {
         if (isMilkCoffee(order.getType())) {
             try {
                 int milkAmount = getReceipe(order).getMilkAmount();
@@ -55,7 +55,7 @@ public class CoffeeMachine {
         }
     }
 
-    private CoffeeReceipe getReceipe(CoffeOrder order) {
+    private CoffeeReceipe getReceipe(CoffeeOrder order) {
         CoffeeReceipe receipe = receipes.getReceipe(order.getType());
         if (isNull(receipe)) {
             throw new UnsupportedCoffeeException(order.getType());
@@ -63,12 +63,12 @@ public class CoffeeMachine {
         return receipe;
     }
 
-    private boolean isMilkCoffee(CoffeType type) {
+    private boolean isMilkCoffee(CoffeeType type) {
         return receipes.getReceipe(type)
                        .withMilk();
     }
 
-    private int getWaterAmount(CoffeOrder order, CoffeeReceipe receipe) {
+    private int getWaterAmount(CoffeeOrder order, CoffeeReceipe receipe) {
         Integer waterAmount = receipe.getWaterAmount(order.getSize());
         if (isNull(waterAmount)) {
             throw new UnsupportedCoffeeSizeException(order.getType(), order.getSize());
