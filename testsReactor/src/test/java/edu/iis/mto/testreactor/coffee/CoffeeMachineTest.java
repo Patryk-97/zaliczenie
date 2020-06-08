@@ -1,5 +1,7 @@
 package edu.iis.mto.testreactor.coffee;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,16 +42,17 @@ class CoffeeMachineTest {
     }
 
     @Test
-    public void ShouldCallGrinderAndMilkProviderandCoffeeMachine() {
+    public void makeMethodTestCoffeeShouldBeNotNull() {
         CoffeeOrder coffeeOrder = coffeeOrder(unrelevantCoffeeSize, unrelevantCoffeeType);
         Coffee coffee = coffeeMachine.make(coffeeOrder);
+        assertNotNull(coffee);
     }
 
     private CoffeeOrder coffeeOrder(CoffeeSize unrelevantCoffeeSize, CoffeeType unrelevantCoffeeType) {
         return CoffeeOrder.builder()
-                         .withSize(unrelevantCoffeeSize)
-                         .withType(unrelevantCoffeeType)
-                         .build();
+                          .withSize(unrelevantCoffeeSize)
+                          .withType(unrelevantCoffeeType)
+                          .build();
     }
 
 }
