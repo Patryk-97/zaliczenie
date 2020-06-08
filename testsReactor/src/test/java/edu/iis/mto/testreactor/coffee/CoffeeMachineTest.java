@@ -2,6 +2,9 @@ package edu.iis.mto.testreactor.coffee;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import edu.iis.mto.testreactor.coffee.milkprovider.MilkProvider;
+import edu.iis.mto.testreactor.coffee.milkprovider.MilkProviderException;
 
 @ExtendWith(MockitoExtension.class)
 class CoffeeMachineTest {
@@ -23,9 +27,6 @@ class CoffeeMachineTest {
     @Mock
     private CoffeeReceipes receipes;
 
-    @Mock
-    private CoffeeReceipe receipe;
-
     private CoffeeMachine coffeeMachine;
     private CoffeeSize unrelevantCoffeeSize = CoffeeSize.SMALL;
     private CoffeeType unrelevantCoffeeType = CoffeeType.CAPUCCINO;
@@ -37,8 +38,14 @@ class CoffeeMachineTest {
         unrelevantCoffeeType = CoffeeType.CAPUCCINO;
         Mockito.when(grinder.canGrindFor(unrelevantCoffeeSize))
                .thenReturn(true);
+        Map<CoffeeSize, Integer> waterAmounts = new HashMap<>();
+        waterAmounts.put(unrelevantCoffeeSize, Integer.valueOf(2));
+        CoffeeReceipe coffeeReceipe = CoffeeReceipe.builder()
+                                                   .withMilkAmount(2)
+                                                   .withWaterAmounts(waterAmounts)
+                                                   .build();
         Mockito.when(receipes.getReceipe(unrelevantCoffeeType))
-               .thenReturn(receipe);
+               .thenReturn(coffeeReceipe);
     }
 
     @Test
@@ -46,6 +53,17 @@ class CoffeeMachineTest {
         CoffeeOrder coffeeOrder = coffeeOrder(unrelevantCoffeeSize, unrelevantCoffeeType);
         Coffee coffee = coffeeMachine.make(coffeeOrder);
         assertNotNull(coffee);
+    }
+
+    @Test
+    void makeFunctionTestShouldCallGrinderAndMilkProviderAndCofeeReceipes() throws MilkProviderException {
+        CoffeeOrder coffeeOrder = coffeeOrder(unrelevantCoffeeSize, unrelevantCoffeeType);
+        coffeeMachine.make(coffeeOrder);
+
+        Mockito.verify(grinder)
+               .canGrindFor(unrelevantCoffeeSize);
+        Mockito.verify(milkProvider)
+               .heat();
     }
 
     private CoffeeOrder coffeeOrder(CoffeeSize unrelevantCoffeeSize, CoffeeType unrelevantCoffeeType) {
